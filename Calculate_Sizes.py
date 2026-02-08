@@ -25,7 +25,8 @@ def calculate_map_sizes(image_path, equator_circumference, output_file='map_size
     MAP_WIDTH, MAP_HEIGHT = img.size
     print(f"Dimensions: {MAP_WIDTH}x{MAP_HEIGHT} pixels")
 
-    KM_PER_PIXEL = (equator_circumference / MAP_WIDTH) ** 2
+    KM_PER_PIXEL = equator_circumference / MAP_WIDTH
+    AREA_PER_PIXEL = KM_PER_PIXEL ** 2
 
     print(f"Equator circumference: {equator_circumference:,.2f} km")
     print(f"Km per pixel: {equator_circumference / MAP_WIDTH:.4f} km")
@@ -37,7 +38,7 @@ def calculate_map_sizes(image_path, equator_circumference, output_file='map_size
     y_coords = np.arange(MAP_HEIGHT)
 
     latitudes = 90 - (y_coords / MAP_HEIGHT) * 180
-    area_adjustments = KM_PER_PIXEL * np.cos(np.radians(latitudes))
+    area_adjustments = AREA_PER_PIXEL * np.cos(np.radians(latitudes))
     area_weights = np.repeat(area_adjustments[:, np.newaxis], MAP_WIDTH, axis=1)
 
     print("Processing pixels...")
@@ -117,6 +118,8 @@ def main():
                 map_filename = choice
         except ValueError:
             map_filename = choice
+    else:
+        map_filename = input("Enter the path to the map image file: ")
 
     equator_circumference = input("Enter the equator circumference in kilometers (default 40075 km): ")
 
