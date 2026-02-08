@@ -1,4 +1,5 @@
 import numpy as np
+from numpy.lib.stride_tricks import as_strided
 from PIL import Image
 import pandas as pd
 import os
@@ -42,9 +43,7 @@ def calculate_map_sizes(image_path, equator_circumference, output_file='map_size
     area_weights = np.repeat(area_adjustments[:, np.newaxis], MAP_WIDTH, axis=1)
 
     print("Processing pixels...")
-    color_ids = (img_array[:, :, 0].astype(np.uint32) << 16) + \
-                (img_array[:, :, 1].astype(np.uint32) << 8) + \
-                img_array[:, :, 2].astype(np.uint32)
+    color_ids = img_array[:, :, 0] * 65536 + img_array[:, :, 1] * 256 + img_array[:, :, 2]
 
     land_mask = color_ids != 0xFFFFFF
     unique_colors = np.unique(color_ids[land_mask])
