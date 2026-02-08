@@ -66,3 +66,7 @@ Still working on it, please message me if you do find out why it's having some d
 ### License
 MIT License - feel free to use and modify for your projects.
 
+### WIP
+- Additional Projection compatibilities
+- Adjustable Map Sizes (partial instead of complete world maps)
+- Anti-Aliasing considerations, currently requires hard-colours and near-pixel perfect etc.
