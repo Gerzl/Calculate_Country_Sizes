@@ -40,13 +40,14 @@ Testing it with a map of the real world and roughly colouring some states (at th
 
 We get in the output file:
 
-Hex Color | Pixel Count | Area (km^2)
-#000000 |	40115 | 69893122.75
-#761818 | 21596 | 33930370.61
-#B82424 | 16300 | 16475961.09
-#2F3EA9 | 6011	| 9002863.22
-#3F3F3F | 3376 | 4660965.386
-TOTAL | 87398	| 133963283.1
+| Hex Color | Pixel Count | Area (km^2) | 
+| --- | --- | --- |
+| #000000 |	40115 | 69893122.75 |
+| #761818 | 21596 | 33930370.61 | 
+| #B82424 | 16300 | 16475961.09 | 
+| #2F3EA9 | 6011	| 9002863.22 |
+| #3F3F3F | 3376 | 4660965.386 |
+| TOTAL | 87398	| 133963283.1 |
 
 #761818 being the British Empire at its peak
 #B82424 being modern day Russia
