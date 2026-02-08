@@ -63,10 +63,10 @@ Still working on it, please message me if you do find out why it's having some d
 - Only works with equirectangular projection maps, looking to add an option for mercator projection.
 - Best results with solid colours - I plan on adding anti-aliasing adjustments to unique colours, but current a WIP.
 
-### License
-MIT License - feel free to use and modify for your projects.
-
 ### WIP
 - Additional Projection compatibilities
 - Adjustable Map Sizes (partial instead of complete world maps)
 - Anti-Aliasing considerations, currently requires hard-colours and near-pixel perfect etc.
+
+### License
+MIT License - feel free to use and modify for your projects.
