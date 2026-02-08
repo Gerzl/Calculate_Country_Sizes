@@ -2,6 +2,7 @@ import numpy as np
 from numpy.lib.stride_tricks import as_strided
 from PIL import Image
 import pandas as pd
+import sys
 import os
 
 def calculate_map_sizes(image_path, equator_circumference, output_file='map_sizes.xlsx'):
@@ -103,22 +104,42 @@ def calculate_map_sizes(image_path, equator_circumference, output_file='map_size
 
 def main():
 
-    image_files = [f for f in os.listdir('.') if f.lower().endswith(('.png', '.jpg', '.jpeg', '.bmp', '.tiff'))]
-    if image_files:
-        print("Image files found in this folder:")
-        for i, f in enumerate(image_files, 1):
-            print(f"{i}. {f}")
-        choice = input(f"Select an image file by number (1-{len(image_files)}), or enter a custom path: ")
-        try:
-            choice_num = int(choice)
-            if 1 <= choice_num <= len(image_files):
-                map_filename = image_files[choice_num - 1]
-            else:
+    try:
+        import openpyxl
+    except ImportError:
+        print("Warning: openpyxl not installed. Install with: pip install openpyxl")
+        sys.exit(1)
+
+    attempts = 0
+
+    while attempts < 4:
+        image_files = [f for f in os.listdir('.') if f.lower().endswith(('.png', '.jpg', '.jpeg', '.bmp', '.tiff'))]
+
+        if image_files:
+            print("Image files found in this folder:")
+            for i, f in enumerate(image_files, 1):
+                print(f"{i}. {f}")
+            choice = input(f"Select an image file by number (1-{len(image_files)}), or enter a custom path: ")
+            try:
+                choice_num = int(choice)
+                if 1 <= choice_num <= len(image_files):
+                    map_filename = image_files[choice_num - 1]
+                else:
+                    map_filename = choice
+            except ValueError:
                 map_filename = choice
-        except ValueError:
-            map_filename = choice
-    else:
-        map_filename = input("Enter the path to the map image file: ")
+        else:
+            map_filename = input("Enter the path to the map image file: ")
+
+        if os.path.exists(map_filename):
+            break
+        else:
+            print(f"File '{map_filename}' not found. Please try again.\n")
+            retry = input("Do you want to try again? (y/n): ").strip().lower()
+            if retry != 'y':
+                print("Exiting script.")
+                return
+            attempts += 1
 
     equator_circumference = input("Enter the equator circumference in kilometers (default 40075 km): ")
 
