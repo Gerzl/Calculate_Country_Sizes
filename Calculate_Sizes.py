@@ -74,6 +74,7 @@ def calculate_map_sizes(image_path, equator_circumference, output_file='map_size
 
     # Load population image if provided
     population_array = None
+    white_mask = None
     if population_image_path:
         print(f"Loading population map: {population_image_path}")
         try:
@@ -91,6 +92,7 @@ def calculate_map_sizes(image_path, equator_circumference, output_file='map_size
             print(f"Error loading population image: {e}")
             print("Continuing without population data...\n")
             population_array = None
+            white_mask = None
 
     data = []
     for i, color_id in enumerate(unique_colors):
@@ -110,7 +112,7 @@ def calculate_map_sizes(image_path, equator_circumference, output_file='map_size
         }
         
         # Add population count if population map is provided
-        if population_array is not None:
+        if population_array is not None and white_mask is not None:
             # Count white pixels within this country's territory
             country_pop_pixels = np.sum(white_mask & mask)
             entry['Population'] = int(country_pop_pixels * population_per_pixel)
@@ -133,7 +135,7 @@ def calculate_map_sizes(image_path, equator_circumference, output_file='map_size
         'Area (km²)': total_area
     }
     
-    if population_array is not None:
+    if population_array is not None and white_mask is not None:
         total_population = int(np.sum(white_mask & land_mask) * population_per_pixel)
         totals_dict['Population'] = total_population
 
@@ -154,7 +156,7 @@ def calculate_map_sizes(image_path, equator_circumference, output_file='map_size
     print(f"Unique colours: {len(unique_colors)}")
     print(f"Total land pixels: {total_pixels:,}")
     print(f"Total land area: {total_area:,.2f} km²")
-    if population_array is not None:
+    if population_array is not None and white_mask is not None:
         print(f"Total population: {totals_dict['Population']:,} people")
     print()
 
@@ -254,7 +256,7 @@ def main():
         else:
             print(f"Population map file '{pop_map_filename}' not found. Continuing without population data.")
 
-    output_filename = f"{os.path.splitext(map_filename)[0]}_map_sizes.xlsx"
+    output_filename = f"{os.path.splitext(map_filename)[0]}map_sizes.xlsx"
 
     result = calculate_map_sizes(map_filename, equator_circumference, output_filename,
                                   population_image_path, population_per_pixel,
