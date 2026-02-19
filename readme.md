@@ -2,6 +2,11 @@
 
 This is a python script that calculates the land areas for an equirectangular map assuming that each country is colour-coded uniquely, accounting for distortion at higher latitudes.
 
+## What This Does
+Calculates the actual land area of countries on equirectangular map 
+projections by accounting for latitude-based distortion. Takes a 
+color-coded map and exports area calculations to Excel.
+
 ### Basic Usage
 
 #### Requirements for this script
@@ -28,6 +33,7 @@ The generated excel file contains the hex colour, pixel count, and area (km^2), 
 ### Examples
 
 Testing it with a map of the real world and roughly colouring some states (at their peak), see example Equirectangular_Map_Example.png
+![Example Map](Equirectangular_Map_Example.png)
 
 ```
   python country_size_calculator.py
